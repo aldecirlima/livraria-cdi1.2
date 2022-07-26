@@ -61,6 +61,11 @@
 			<version>2.3.5.Final</version>
 		</dependency>
 
+		<dependency>
+			<groupId>br.com.alura</groupId>
+			<artifactId>alura-lib</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 	</dependencies>
 

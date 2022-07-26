@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.alura.livraria.dao.UsuarioDao;
@@ -18,6 +19,16 @@ public class LoginBean implements Serializable {
 	
 	private Usuario usuario = new Usuario();
 
+//	A injeção pode ser feita diretamente acima do objeto ou no construtor da classe
+//	desde que o construtor receba o objeto injetado como parâmetro
+	
+	private UsuarioDao usuarioDao;
+	
+	@Inject
+	public LoginBean(UsuarioDao usuarioDao) {
+		this.usuarioDao = usuarioDao;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -26,7 +37,7 @@ public class LoginBean implements Serializable {
 		System.out.println("fazendo login do usuario " + this.usuario.getEmail());
 		
 		FacesContext context = FacesContext.getCurrentInstance();
-		boolean existe = new UsuarioDao().existe(this.usuario);
+		boolean existe = usuarioDao.existe(this.usuario);
 		if(existe ) {
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
